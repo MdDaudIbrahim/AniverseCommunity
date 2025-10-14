@@ -1,0 +1,4 @@
+# Netlify Redirects for Single Page Application
+# This ensures all routes work correctly
+
+/*    /index.html   200

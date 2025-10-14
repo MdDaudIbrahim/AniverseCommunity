@@ -1,0 +1,49 @@
+{
+  "name": "AnimeVerse - Anime Recommendations",
+  "short_name": "AnimeVerse",
+  "description": "Discover and explore anime with personalized recommendations",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1E293B",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "lifestyle"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Top 100 Anime",
+      "short_name": "Top 100",
+      "description": "Browse the top 100 anime",
+      "url": "/top-anime",
+      "icons": []
+    },
+    {
+      "name": "Seasonal Anime",
+      "short_name": "Seasonal",
+      "description": "Current season's anime",
+      "url": "/seasonal",
+      "icons": []
+    },
+    {
+      "name": "Browse Genres",
+      "short_name": "Genres",
+      "description": "Explore anime by genre",
+      "url": "/genres",
+      "icons": []
+    }
+  ]
+}
