@@ -114,6 +114,9 @@ export default function Header() {
             <Link href="/genres" className="hover:text-primary transition-colors">
               Genres
             </Link>
+            <Link href="/news" className="hover:text-primary transition-colors">
+              News
+            </Link>
             <Link href="/recommendations" className="hover:text-primary transition-colors">
               Recommendations
             </Link>
@@ -286,6 +289,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Genres
+            </Link>
+            <Link
+              href="/news"
+              className="block hover:text-primary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              News
             </Link>
             <Link
               href="/recommendations"
