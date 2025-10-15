@@ -4,7 +4,7 @@ A modern, blazing-fast anime recommendation and discovery website built with **N
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue) ![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38bdf8) ![License](https://img.shields.io/badge/License-MIT-green)
 
-**Live Demo:** [nextanime.vercel.app](https://nextanime.vercel.app) (Replace with your URL)
+**Live Demo:**---> https://aniversecommunity.netlify.app/
 
 ---
 
