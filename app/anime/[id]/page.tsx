@@ -315,6 +315,86 @@ export default function AnimePage() {
                     </div>
                   </section>
                 )}
+                {/* Statistics */}
+                <section className="bg-[#1a1a1a] rounded-lg p-6 border border-[#262626]">
+                  <h2 className="text-2xl font-bold mb-6 text-white">Statistics</h2>
+                  {stats ? (
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <StatCard label="Watching" value={stats.watching?.toLocaleString() || '0'} color="text-blue-400" />
+                        <StatCard label="Completed" value={stats.completed?.toLocaleString() || '0'} color="text-green-400" />
+                        <StatCard label="On Hold" value={stats.on_hold?.toLocaleString() || '0'} color="text-yellow-400" />
+                        <StatCard label="Dropped" value={stats.dropped?.toLocaleString() || '0'} color="text-red-400" />
+                        <StatCard label="Plan to Watch" value={stats.plan_to_watch?.toLocaleString() || '0'} color="text-purple-400" />
+                        <StatCard label="Total" value={stats.total?.toLocaleString() || '0'} color="text-[#10b981]" />
+                      </div>
+
+                      {/* Score Distribution */}
+                      {stats.scores && stats.scores.length > 0 && (
+                        <div className="mt-8">
+                          <h3 className="text-xl font-bold mb-4 text-white">Score Distribution</h3>
+                          <div className="space-y-2">
+                            {stats.scores.slice().reverse().map((score: any) => (
+                              <div key={score.score} className="flex items-center gap-3">
+                                <span className="text-white w-8">{score.score}</span>
+                                <div className="flex-1 bg-[#262626] rounded-full h-6 overflow-hidden">
+                                  <div
+                                    className="bg-[#10b981] h-full rounded-full flex items-center justify-end pr-2"
+                                    style={{ width: `${(score.votes / stats.total) * 100}%` }}
+                                  >
+                                    <span className="text-xs text-white font-medium">
+                                      {score.votes.toLocaleString()}
+                                    </span>
+                                  </div>
+                                </div>
+                                <span className="text-gray-400 w-16 text-sm">
+                                  {((score.votes / stats.total) * 100).toFixed(1)}%
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-gray-400 text-center py-8">No statistics available</p>
+                  )}
+                </section>
+
+                {/* Related/Recommendations */}
+                <section className="bg-[#1a1a1a] rounded-lg p-6 border border-[#262626]">
+                  <h2 className="text-2xl font-bold mb-6 text-white">Related Anime</h2>
+                  {recommendations.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                      {recommendations.slice(0, 12).map((rec: any) => {
+                        const recAnime = rec.entry;
+                        if (!recAnime || recAnime.mal_id === animeId) return null;
+                        
+                        return (
+                          <Link
+                            key={recAnime.mal_id}
+                            href={`/anime/${recAnime.mal_id}`}
+                            className="group"
+                          >
+                            <div className="relative aspect-[2/3] rounded-lg overflow-hidden border border-[#262626] group-hover:border-[#10b981] transition-all">
+                              <Image
+                                src={recAnime.images.webp.image_url}
+                                alt={recAnime.title}
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform"
+                              />
+                            </div>
+                            <h3 className="mt-2 text-sm text-white font-medium line-clamp-2 group-hover:text-[#10b981] transition-colors">
+                              {recAnime.title}
+                            </h3>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-gray-400 text-center py-8">No recommendations available</p>
+                  )}
+                </section>
               </>
             )}
 
