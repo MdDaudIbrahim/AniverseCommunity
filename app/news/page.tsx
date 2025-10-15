@@ -1,266 +1,220 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi';
+import Image from 'next/image';
+import { FiCalendar, FiArrowRight } from 'react-icons/fi';
+
 interface NewsArticle {
-  id: number;
+  mal_id: number;
+  url: string;
   title: string;
-  excerpt: string;
   date: string;
-  category: string;
-  image: string;
-  source: string;
-  readTime?: string;
+  author_username: string;
+  author_url: string;
+  forum_url: string;
+  images: {
+    jpg: {
+      image_url: string;
+    };
+  };
+  comments: number;
+  excerpt: string;
+  category?: string;
 }
 
 export default function NewsPage() {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [page, setPage] = useState(1);
 
-  // Fallback news data
-  const fallbackNews: NewsArticle[] = [
-    {
-      id: 1,
-      title: "Attack on Titan Final Season Part 3 Announced",
-      excerpt: "The epic saga continues with the announcement of Attack on Titan Final Season Part 3, set to premiere in 2024.",
-      date: "2024-01-15",
-      category: "Announcements",
-      image: "https://cdn.myanimelist.net/images/anime/1948/120625.jpg",
-      source: "Official Website",
-      readTime: "3 min read"
-    },
-    {
-      id: 2,
-      title: "Demon Slayer Movie Breaks Box Office Records",
-      excerpt: "The latest Demon Slayer movie has shattered box office records worldwide, becoming the highest-grossing anime film.",
-      date: "2024-01-14",
-      category: "Box Office",
-      image: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg",
-      source: "Anime News Network",
-      readTime: "5 min read"
-    },
-    {
-      id: 3,
-      title: "My Hero Academia Season 7 Release Date Revealed",
-      excerpt: "Fans rejoice as the official release date for My Hero Academia Season 7 has been announced for Spring 2024.",
-      date: "2024-01-13",
-      category: "Releases",
-      image: "https://cdn.myanimelist.net/images/anime/1965/111417.jpg",
-      source: "Crunchyroll",
-      readTime: "4 min read"
-    },
-    {
-      id: 4,
-      title: "Jujutsu Kaisen Announces New Movie Project",
-      excerpt: "MAPPA studio confirms a new Jujutsu Kaisen movie is in production, featuring an original story by Gege Akutami.",
-      date: "2024-01-12",
-      category: "Announcements",
-      image: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg",
-      source: "Official Twitter",
-      readTime: "3 min read"
-    },
-    {
-      id: 5,
-      title: "Chainsaw Man Season 2 in Development",
-      excerpt: "MAPPA confirms that Chainsaw Man Season 2 is officially in production, with more details to be revealed soon.",
-      date: "2024-01-11",
-      category: "Production",
-      image: "https://cdn.myanimelist.net/images/anime/1806/126216.jpg",
-      source: "Anime Expo",
-      readTime: "4 min read"
-    },
-    {
-      id: 6,
-      title: "Spy x Family Code: White Movie Premieres Globally",
-      excerpt: "The highly anticipated Spy x Family movie premieres worldwide, featuring the Forger family in a new adventure.",
-      date: "2024-01-10",
-      category: "Releases",
-      image: "https://cdn.myanimelist.net/images/anime/1111/127508.jpg",
-      source: "Official Site",
-      readTime: "5 min read"
-    },
-    {
-      id: 7,
-      title: "One Piece Reaches Episode 1100 Milestone",
-      excerpt: "One Piece anime reaches a historic milestone with episode 1100, celebrating over two decades of adventure.",
-      date: "2024-01-09",
-      category: "Milestones",
-      image: "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
-      source: "Toei Animation",
-      readTime: "3 min read"
-    },
-    {
-      id: 8,
-      title: "Tokyo Revengers Final Season Trailer Released",
-      excerpt: "The final season of Tokyo Revengers gets an epic trailer showcasing the climactic battle.",
-      date: "2024-01-08",
-      category: "Trailers",
-      image: "https://cdn.myanimelist.net/images/anime/1839/122012.jpg",
-      source: "YouTube",
-      readTime: "2 min read"
-    },
-    {
-      id: 9,
-      title: "Vinland Saga Season 3 Confirmed for 2025",
-      excerpt: "MAPPA announces Vinland Saga Season 3 is confirmed for 2025, continuing Thorfinn's journey.",
-      date: "2024-01-07",
-      category: "Announcements",
-      image: "https://cdn.myanimelist.net/images/anime/1170/124312.jpg",
-      source: "Official Press Release",
-      readTime: "4 min read"
-    },
-    {
-      id: 10,
-      title: "Studio Ghibli Announces New Film Project",
-      excerpt: "Studio Ghibli reveals a new original film in development, directed by Hayao Miyazaki's protégé.",
-      date: "2024-01-06",
-      category: "Production",
-      image: "https://cdn.myanimelist.net/images/anime/1439/93004.jpg",
-      source: "Ghibli Museum",
-      readTime: "5 min read"
-    },
-    {
-      id: 11,
-      title: "Bleach: Thousand-Year Blood War Part 3 Details",
-      excerpt: "New details emerge about Bleach TYBW Part 3, including premiere date and key visual reveals.",
-      date: "2024-01-05",
-      category: "Releases",
-      image: "https://cdn.myanimelist.net/images/anime/1764/126627.jpg",
-      source: "Crunchyroll Expo",
-      readTime: "4 min read"
-    },
-    {
-      id: 12,
-      title: "Frieren: Beyond Journey's End Wins Anime Awards",
-      excerpt: "Frieren dominates this year's anime awards, winning Best Animation and Best Story categories.",
-      date: "2024-01-04",
-      category: "Awards",
-      image: "https://cdn.myanimelist.net/images/anime/1015/138006.jpg",
-      source: "Anime Awards",
-      readTime: "3 min read"
-    }
+  const categories = [
+    'All',
+    'Announcements',
+    'Releases',
+    'Production',
+    'Box Office',
+    'Awards',
+    'Trailers',
+    'Milestones'
   ];
 
-  useEffect(() => {
-    // Simulate API call
-    const timer = setTimeout(() => {
-      setNews(fallbackNews);
-      setLoading(false);
-    }, 500);
+  // Determine category from title keywords
+  const getCategoryFromTitle = (title: string): string => {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes('announce') || lowerTitle.includes('reveal') || lowerTitle.includes('confirm')) return 'Announcements';
+    if (lowerTitle.includes('release') || lowerTitle.includes('premiere') || lowerTitle.includes('date')) return 'Releases';
+    if (lowerTitle.includes('production') || lowerTitle.includes('studio') || lowerTitle.includes('adapt')) return 'Production';
+    if (lowerTitle.includes('box office') || lowerTitle.includes('record') || lowerTitle.includes('gross')) return 'Box Office';
+    if (lowerTitle.includes('award') || lowerTitle.includes('win') || lowerTitle.includes('honor')) return 'Awards';
+    if (lowerTitle.includes('trailer') || lowerTitle.includes('pv') || lowerTitle.includes('teaser')) return 'Trailers';
+    if (lowerTitle.includes('milestone') || lowerTitle.includes('episode') || lowerTitle.includes('chapter')) return 'Milestones';
+    return 'Announcements';
+  };
 
-    return () => clearTimeout(timer);
+  const getCategoryBadge = (category: string) => {
+    const colors: { [key: string]: string } = {
+      'Announcements': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      'Releases': 'bg-green-500/20 text-green-400 border-green-500/30',
+      'Production': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      'Box Office': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+      'Awards': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+      'Trailers': 'bg-red-500/20 text-red-400 border-red-500/30',
+      'Milestones': 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
+    };
+    return colors[category] || colors['Announcements'];
+  };
+
+  // Fetch real news from Jikan API
+  useEffect(() => {
+    const fetchNews = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('https://api.jikan.moe/v4/anime/1/news');
+        const data = await response.json();
+        
+        if (data.data) {
+          const newsWithCategories = data.data.map((item: any) => ({
+            ...item,
+            category: getCategoryFromTitle(item.title)
+          }));
+          setNews(newsWithCategories);
+        }
+      } catch (error) {
+        console.error('Failed to fetch news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
   }, []);
 
-  const categories = ['all', 'Announcements', 'Releases', 'Production', 'Box Office', 'Awards', 'Trailers', 'Milestones'];
-
-  const filteredNews = activeCategory === 'all' 
+  const filteredNews = activeCategory === 'All' 
     ? news 
     : news.filter(item => item.category === activeCategory);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <div className="container mx-auto px-4 py-6">
-        {/* Minimal Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
-            Anime News
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Latest Anime News
           </h1>
-          <p className="text-sm text-gray-400">
-            Latest updates from the anime world
+          <p className="text-gray-400 text-lg">
+            Stay updated with the latest news from the anime world
           </p>
         </div>
 
-        {/* Ad Banner */}{/* Minimal Category Filter */}
-        <div className="mb-6 flex items-center justify-center">
-          <div className="inline-flex flex-wrap gap-2 bg-[#1a1a1a] border border-[#262626] rounded-lg p-2">
+        {/* Category Filter */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all ${
                   activeCategory === category
-                    ? 'bg-[#10b981] text-white'
-                    : 'text-gray-300 hover:bg-[#0f0f0f] hover:text-white'
+                    ? 'bg-[#10b981] text-white shadow-lg shadow-[#10b981]/20'
+                    : 'bg-[#1a1a1a] text-gray-400 hover:bg-[#262626] border border-[#262626]'
                 }`}
               >
-                {category === 'all' ? 'All' : category}
+                {category}
               </button>
             ))}
           </div>
         </div>
 
+        {/* News Grid */}
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#10b981]"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className="bg-[#1a1a1a] rounded-xl overflow-hidden animate-pulse">
+                <div className="w-full h-48 bg-[#262626]" />
+                <div className="p-6 space-y-3">
+                  <div className="h-4 bg-[#262626] rounded w-3/4" />
+                  <div className="h-4 bg-[#262626] rounded w-full" />
+                  <div className="h-4 bg-[#262626] rounded w-5/6" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <>
-            {/* Clean News Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {filteredNews.map((article) => (
-                <Link
-                  key={article.id}
-                  href={`/news/${article.id}`}
-                  className="group bg-[#1a1a1a] border border-[#262626] hover:border-[#10b981]/50 rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:shadow-[#10b981]/20 transition-all"
-                >
-                  {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-2 left-2">
-                      <span className="px-2 py-1 bg-black/80 backdrop-blur-sm text-white rounded text-xs font-medium">
-                        {article.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-4">
-                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
-                      <div className="flex items-center gap-1">
-                        <FiCalendar size={12} />
-                        <span>{new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                      </div>
-                      {article.readTime && (
-                        <>
-                          <span>•</span>
-                          <div className="flex items-center gap-1">
-                            <FiClock size={12} />
-                            <span>{article.readTime}</span>
-                          </div>
-                        </>
+            {filteredNews.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-gray-400 text-lg">No news articles found for this category.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredNews.map((article) => (
+                  <article
+                    key={article.mal_id}
+                    className="bg-[#1a1a1a] border border-[#262626] rounded-xl overflow-hidden hover:border-[#10b981] transition-all hover:shadow-lg hover:shadow-[#10b981]/10 group"
+                  >
+                    {/* Image */}
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={article.images.jpg.image_url}
+                        alt={article.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      {article.category && (
+                        <div className="absolute top-3 left-3">
+                          <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getCategoryBadge(article.category)}`}>
+                            {article.category}
+                          </span>
+                        </div>
                       )}
                     </div>
 
-                    <h3 className="text-base font-bold mb-2 line-clamp-2 text-white group-hover:text-[#10b981] transition-colors">
-                      {article.title}
-                    </h3>
+                    {/* Content */}
+                    <div className="p-6">
+                      <h2 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-[#10b981] transition-colors">
+                        {article.title}
+                      </h2>
 
-                    <p className="text-sm text-gray-400 line-clamp-2 mb-3">
-                      {article.excerpt}
-                    </p>
+                      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                        {article.excerpt}
+                      </p>
 
-                    <div className="flex items-center text-[#10b981] text-sm font-medium">
-                      <span>Read more</span>
-                      <FiArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" size={14} />
+                      {/* Meta Info */}
+                      <div className="flex items-center gap-4 text-xs text-gray-500 mb-4 flex-wrap">
+                        <div className="flex items-center gap-1">
+                          <FiCalendar className="w-3.5 h-3.5" />
+                          <span>{new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        </div>
+                        {article.author_username && (
+                          <div className="flex items-center gap-1">
+                            <span className="text-gray-600">by</span>
+                            <span className="text-gray-400">{article.author_username}</span>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-1">
+                          <span className="text-gray-600">💬</span>
+                          <span>{article.comments}</span>
+                        </div>
+                      </div>
+
+                      {/* Read More Button */}
+                      <a
+                        href={article.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-[#10b981] hover:text-[#0d9668] font-medium text-sm transition-colors"
+                      >
+                        Read More
+                        <FiArrowRight className="w-4 h-4" />
+                      </a>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {filteredNews.length === 0 && (
-              <div className="text-center py-12 bg-[#1a1a1a] border border-[#262626] rounded-lg">
-                <p className="text-gray-400 text-sm">No news in this category</p>
+                  </article>
+                ))}
               </div>
             )}
-
-            {/* Bottom Ad */}</>
+          </>
         )}
       </div>
     </div>
