@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import CharacterSearch from './CharacterSearch';
 
 interface Anime {
   mal_id: number;
@@ -348,26 +349,7 @@ export default function AnimeVaultGrid() {
         )}
 
         {/* Character Search Section */}
-        <div className="mt-16 pt-16 border-t border-[#262626]">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#10b981] mb-6 uppercase tracking-wide">
-            Character Search
-          </h2>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search for anime characters..."
-              className="w-full bg-[#1a1a1a] border border-[#262626] rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-[#10b981] focus:outline-none transition-colors"
-            />
-            <svg 
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500"
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-        </div>
+        <CharacterSearch />
       </div>
 
       {/* Sidebar - Top Movies */}
