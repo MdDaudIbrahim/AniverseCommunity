@@ -23,22 +23,37 @@ export default function LatestAnimeNews() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    async function fetchNews() {
+    async function fetchNews(retryCount = 0) {
       try {
+        console.log('📰 Fetching anime news...');
         const response = await fetch('https://api.jikan.moe/v4/anime/1/news');
-        if (response.ok) {
-          const data = await response.json();
-          console.log('📰 News fetched:', data.data?.length || 0);
-          setNews(data.data?.slice(0, 10) || []);
+        
+        if (!response.ok) {
+          if ((response.status === 429 || response.status >= 500) && retryCount < 2) {
+            console.log(`⏳ Retrying news fetch... (${retryCount + 1}/2)`);
+            await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
+            return fetchNews(retryCount + 1);
+          }
+          throw new Error(`API request failed with status ${response.status}`);
         }
+        
+        const data = await response.json();
+        console.log('✅ News fetched:', data.data?.length || 0);
+        setNews(data.data?.slice(0, 10) || []);
       } catch (error) {
-        console.error('Error fetching news:', error);
+        console.error('❌ Error fetching news:', error);
+        setNews([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchNews();
+    // Delay news fetch to avoid rate limiting (after seasonal anime)
+    const timer = setTimeout(() => {
+      fetchNews();
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const scroll = (direction: 'left' | 'right') => {

@@ -58,10 +58,10 @@ export default function RootLayout({
       <head>
         <AdSenseScript />
       </head>
-      <body className={`${inter.className} bg-[#0a0a0a]`}>
-        <div className="flex flex-col min-h-screen bg-[#0a0a0a]">
+      <body className={`${inter.className} bg-[#0a0a0a] overflow-x-hidden`}>
+        <div className="flex flex-col min-h-screen bg-[#0a0a0a] w-full overflow-x-hidden">
           <Header />
-          <main className="flex-grow bg-[#0a0a0a]">
+          <main className="flex-grow bg-[#0a0a0a] w-full overflow-x-hidden">
             {children}
           </main>
           <Footer />

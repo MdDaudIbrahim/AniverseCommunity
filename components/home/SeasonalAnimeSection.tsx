@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -24,32 +24,82 @@ export default function SeasonalAnimeSection() {
   const [loading, setLoading] = useState(true);
   const [selectedYear, setSelectedYear] = useState('2025');
   const [selectedSeason, setSelectedSeason] = useState('Fall');
+  const [autoReload, setAutoReload] = useState(true);
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [countdown, setCountdown] = useState(300); // 5 minutes in seconds
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i + 1);
   const seasons = ['Winter', 'Spring', 'Summer', 'Fall'];
 
-  useEffect(() => {
-    async function fetchSeasonalAnime() {
-      try {
-        setLoading(true);
-        const season = selectedSeason.toLowerCase();
-        const response = await fetch(`https://api.jikan.moe/v4/seasons/${selectedYear}/${season}?sfw=true`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          console.log('🍂 Seasonal anime fetched:', data.data?.length || 0);
-          setAnime(data.data?.slice(0, 12) || []);
+  // Fetch function
+  const fetchSeasonalAnime = useCallback(async (retryCount = 0) => {
+    try {
+      setLoading(true);
+      const season = selectedSeason.toLowerCase();
+      console.log(`🍂 Fetching seasonal anime: ${selectedSeason} ${selectedYear}...`);
+      
+      const response = await fetch(`https://api.jikan.moe/v4/seasons/${selectedYear}/${season}?sfw=true`);
+      
+      if (!response.ok) {
+        if ((response.status === 429 || response.status >= 500) && retryCount < 2) {
+          console.log(`⏳ Retrying seasonal fetch... (${retryCount + 1}/2)`);
+          await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
+          return fetchSeasonalAnime(retryCount + 1);
         }
-      } catch (error) {
-        console.error('Error fetching seasonal anime:', error);
-      } finally {
-        setLoading(false);
+        throw new Error(`API request failed with status ${response.status}`);
       }
+      
+      const data = await response.json();
+      console.log('✅ Seasonal anime fetched:', data.data?.length || 0);
+      setAnime(data.data?.slice(0, 12) || []);
+      setLastUpdate(new Date());
+      setCountdown(300); // Reset countdown to 5 minutes
+    } catch (error) {
+      console.error('❌ Error fetching seasonal anime:', error);
+      setAnime([]);
+    } finally {
+      setLoading(false);
     }
-
-    fetchSeasonalAnime();
   }, [selectedYear, selectedSeason]);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchSeasonalAnime();
+  }, [fetchSeasonalAnime]);
+
+  // Auto-reload timer (every 5 minutes)
+  useEffect(() => {
+    if (!autoReload) return;
+
+    const interval = setInterval(() => {
+      console.log('🔄 Auto-reloading seasonal anime...');
+      fetchSeasonalAnime();
+    }, 300000); // 5 minutes = 300000ms
+
+    return () => clearInterval(interval);
+  }, [autoReload, fetchSeasonalAnime]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!autoReload) return;
+
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) return 300; // Reset to 5 minutes
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [autoReload]);
+
+  // Format countdown time
+  const formatCountdown = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div>
@@ -65,11 +115,11 @@ export default function SeasonalAnimeSection() {
         </div>
 
         {/* Year and Season Selectors */}
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 md:gap-3">
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-2 bg-[#1a1a1a] border border-[#262626] rounded-lg text-white focus:border-[#10b981] focus:outline-none transition-colors cursor-pointer"
+            className="px-3 md:px-4 py-2 bg-[#1a1a1a] border border-[#262626] rounded-lg text-white focus:border-[#10b981] focus:outline-none transition-colors cursor-pointer text-sm"
           >
             {years.map(year => (
               <option key={year} value={year}>{year}</option>
@@ -79,26 +129,59 @@ export default function SeasonalAnimeSection() {
           <select
             value={selectedSeason}
             onChange={(e) => setSelectedSeason(e.target.value)}
-            className="px-4 py-2 bg-[#1a1a1a] border border-[#262626] rounded-lg text-white focus:border-[#10b981] focus:outline-none transition-colors cursor-pointer"
+            className="px-3 md:px-4 py-2 bg-[#1a1a1a] border border-[#262626] rounded-lg text-white focus:border-[#10b981] focus:outline-none transition-colors cursor-pointer text-sm"
           >
             {seasons.map(season => (
               <option key={season} value={season}>{season}</option>
             ))}
           </select>
 
-          <button className="px-4 py-2 bg-[#1a1a1a] hover:bg-[#10b981] hover:text-black border border-[#262626] hover:border-[#10b981] rounded-lg transition-all flex items-center gap-2">
+          <button 
+            onClick={() => fetchSeasonalAnime()}
+            className="px-3 md:px-4 py-2 bg-[#1a1a1a] hover:bg-[#10b981] hover:text-black border border-[#262626] hover:border-[#10b981] rounded-lg transition-all flex items-center gap-2 text-sm"
+            title="Manual refresh"
+          >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
+          </button>
+
+          {/* Auto-reload Toggle */}
+          <button
+            onClick={() => setAutoReload(!autoReload)}
+            className={`px-3 md:px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm border ${
+              autoReload 
+                ? 'bg-[#10b981]/20 border-[#10b981] text-[#10b981]' 
+                : 'bg-[#1a1a1a] border-[#262626] text-gray-400'
+            }`}
+            title={autoReload ? 'Auto-reload enabled' : 'Auto-reload disabled'}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {autoReload && <span className="hidden md:inline">{formatCountdown(countdown)}</span>}
           </button>
         </div>
       </div>
 
-      {/* Subtitle */}
-      <p className="text-gray-400 text-sm mb-6">
-        Discover anime from the {selectedSeason} {selectedYear} season
-      </p>
+      {/* Subtitle with Auto-reload Status */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+        <p className="text-gray-400 text-sm">
+          Discover anime from the {selectedSeason} {selectedYear} season
+        </p>
+        {autoReload && (
+          <p className="text-xs text-[#10b981] flex items-center gap-2">
+            <span className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></span>
+            Auto-reload active • Next update in {formatCountdown(countdown)}
+          </p>
+        )}
+        {!autoReload && lastUpdate && (
+          <p className="text-xs text-gray-500">
+            Last updated: {lastUpdate.toLocaleTimeString()}
+          </p>
+        )}
+      </div>
 
       {/* Anime Grid */}
       {loading ? (

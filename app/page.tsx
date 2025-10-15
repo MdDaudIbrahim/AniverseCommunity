@@ -29,44 +29,44 @@ const TopCharacters = dynamic(() => import("@/components/home/TopCharacters"), {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#0a0a0a] w-full overflow-x-hidden">
       {/* Hero Section - Load immediately */}
-      <section className="relative">
+      <section className="relative w-full overflow-hidden">
         <FeaturedAnimeHero />
       </section>
 
       {/* Main Content with Sidebar - Load immediately */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <AnimeVaultGrid />
       </section>
 
       {/* Latest Anime News - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <LatestAnimeNews />
       </section>
 
       {/* Weekly Schedule - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <WeeklySchedule />
       </section>
 
       {/* Seasonal Anime - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <SeasonalAnimeSection />
       </section>
 
       {/* The Big Three - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <BigThreeSlider />
       </section>
 
       {/* Top Trending - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 overflow-hidden">
         <TopTrending />
       </section>
 
       {/* Top Characters - Lazy loaded */}
-      <section className="container mx-auto px-4 py-12 pb-16">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 pb-16 overflow-hidden">
         <TopCharacters />
       </section>
     </div>

@@ -108,8 +108,8 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 border-b border-[#262626] shadow-2xl backdrop-blur-xl">
-      <nav className="container mx-auto px-4 py-3">
+    <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 border-b border-[#262626] shadow-2xl backdrop-blur-xl w-full overflow-hidden">
+      <nav className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">

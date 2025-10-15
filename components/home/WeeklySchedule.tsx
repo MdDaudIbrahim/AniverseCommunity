@@ -33,7 +33,7 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 export default function WeeklySchedule() {
   const [scheduleData, setScheduleData] = useState<Record<string, ScheduleAnime[]>>({});
   const [loading, setLoading] = useState(true);
-  const [selectedDay, setSelectedDay] = useState<string>('Tuesday');
+  const [selectedDay, setSelectedDay] = useState<string>('');
 
   useEffect(() => {
     async function fetchSchedule() {
@@ -152,13 +152,28 @@ export default function WeeklySchedule() {
             .slice(0, 9);
         });
         
-        console.log('� Final grouped data:', 
+        console.log('📋 Final grouped data:', 
           Object.entries(grouped).map(([day, animes]) => `${day}:${animes.length}`).join(' | ')
         );
         
         setScheduleData(grouped);
+        
+        // Auto-select first day with data
+        const firstDayWithData = DAYS.find(day => grouped[day] && grouped[day].length > 0);
+        if (firstDayWithData) {
+          console.log('🎯 Auto-selecting day with data:', firstDayWithData);
+          setSelectedDay(firstDayWithData);
+        } else {
+          // Fallback to current day if no data found
+          const currentDay = DAYS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1];
+          console.log('📅 No data found, defaulting to:', currentDay);
+          setSelectedDay(currentDay);
+        }
       } catch (error) {
         console.error('❌ Fatal error:', error);
+        // Set default day even on error
+        const currentDay = DAYS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1];
+        setSelectedDay(currentDay);
       } finally {
         setLoading(false);
       }
@@ -192,20 +207,31 @@ export default function WeeklySchedule() {
       ) : (
         <div className="space-y-6">
           {/* Days Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            {DAYS.map((day) => (
-              <button
-                key={day}
-                onClick={() => setSelectedDay(day)}
-                className={`px-5 py-2 rounded-md font-medium text-sm whitespace-nowrap transition-all border ${
-                  selectedDay === day
-                    ? 'bg-[#10b981] text-black border-[#10b981]'
-                    : 'bg-transparent text-gray-300 border-gray-600 hover:border-[#10b981] hover:text-white'
-                }`}
-              >
-                {day}
-              </button>
-            ))}
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {DAYS.map((day) => {
+              const dayAnimeCount = scheduleData[day]?.length || 0;
+              const hasData = dayAnimeCount > 0;
+              
+              return (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day)}
+                  className={`px-5 py-2 rounded-md font-medium text-sm whitespace-nowrap transition-all border relative ${
+                    selectedDay === day
+                      ? 'bg-[#10b981] text-black border-[#10b981]'
+                      : hasData 
+                        ? 'bg-transparent text-gray-300 border-gray-600 hover:border-[#10b981] hover:text-white'
+                        : 'bg-transparent text-gray-600 border-gray-800 opacity-50 cursor-default'
+                  }`}
+                  disabled={!hasData && selectedDay !== day}
+                >
+                  {day}
+                  {hasData && selectedDay !== day && (
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* Grid Layout for Selected Day */}
