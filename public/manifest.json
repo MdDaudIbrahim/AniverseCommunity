@@ -1,6 +1,6 @@
 {
-  "name": "AnimeVerse - Anime Recommendations",
-  "short_name": "AnimeVerse",
+  "name": "NextAnime - Anime Recommendations",
+  "short_name": "NextAnime",
   "description": "Discover and explore anime with personalized recommendations",
   "start_url": "/",
   "display": "standalone",

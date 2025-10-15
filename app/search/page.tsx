@@ -5,8 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import AnimeCard from '@/components/anime/AnimeCard';
 import { Anime } from '@/lib/types/anime';
 import { FiSearch, FiLoader, FiFilter, FiX } from 'react-icons/fi';
-import AdBanner from '@/components/ads/AdBanner';
-
 function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -126,10 +124,7 @@ function SearchContent() {
           )}
         </div>
 
-        {/* Ad Banner */}
-        <AdBanner slot="search-top" format="horizontal" className="mb-8" />
-
-        {/* Filters */}
+        {/* Ad Banner */}{/* Filters */}
         <div className="mb-6">
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -290,11 +285,7 @@ function SearchContent() {
               </div>
             )}
 
-            {/* Bottom Ad */}
-            <div className="mt-12">
-              <AdBanner slot="search-bottom" format="horizontal" />
-            </div>
-          </>
+            {/* Bottom Ad */}</>
         )}
       </div>
     </div>

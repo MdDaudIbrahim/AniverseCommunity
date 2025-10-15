@@ -965,11 +965,6 @@ The series' success story—from acclaimed manga to award-winning anime—exempl
               </button>
             </div>
 
-            {/* Ad Banner */}
-            <div className="mb-8">
-              <AdBanner slot="news-article-top" format="horizontal" />
-            </div>
-
             {/* Article Content */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
               {article.content.split('\n\n').map((paragraph, index) => (
@@ -1018,9 +1013,6 @@ The series' success story—from acclaimed manga to award-winning anime—exempl
               </div>
             </div>
           )}
-
-          {/* Bottom Ad */}
-          <AdBanner slot="news-article-bottom" format="horizontal" />
         </div>
       </div>
     </div>

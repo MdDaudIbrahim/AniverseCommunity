@@ -3,46 +3,46 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 249, 250, 251;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 17, 24, 39;
-    --background-end-rgb: 31, 41, 55;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 10, 10, 10;
+  --surface-rgb: 26, 26, 26;
+  --border-rgb: 38, 38, 38;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
   min-height: 100vh;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Dark Theme with Green Accent */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3B82F6;
-  border-radius: 5px;
+  background: #10b981;
+  border-radius: 6px;
+  border: 2px solid #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563EB;
+  background: #059669;
+}
+
+/* Hide scrollbar for horizontal scroll sections */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Smooth transitions */
@@ -107,6 +107,24 @@ body {
 
 @media (prefers-color-scheme: dark) {
   .skeleton {
-    background: linear-gradient(to right, #374151 4%, #4b5563 25%, #374151 36%);
+    background: linear-gradient(to right, #1a1a1a 4%, #262626 25%, #1a1a1a 36%);
   }
+}
+
+/* Card hover effects */
+.anime-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.anime-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

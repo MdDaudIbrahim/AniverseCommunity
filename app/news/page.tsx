@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi';
-import AdBanner from '@/components/ads/AdBanner';
-
 interface NewsArticle {
   id: number;
   title: string;
@@ -162,32 +160,29 @@ export default function NewsPage() {
     : news.filter(item => item.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <div className="container mx-auto px-4 py-6">
         {/* Minimal Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
             Anime News
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-400">
             Latest updates from the anime world
           </p>
         </div>
 
-        {/* Ad Banner */}
-        <AdBanner slot="news-top" format="horizontal" className="mb-6" />
-
-        {/* Minimal Category Filter */}
+        {/* Ad Banner */}{/* Minimal Category Filter */}
         <div className="mb-6 flex items-center justify-center">
-          <div className="inline-flex flex-wrap gap-2 bg-white dark:bg-gray-800 rounded-lg p-2 shadow-sm">
+          <div className="inline-flex flex-wrap gap-2 bg-[#1a1a1a] border border-[#262626] rounded-lg p-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                   activeCategory === category
-                    ? 'bg-primary text-white'
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-[#10b981] text-white'
+                    : 'text-gray-300 hover:bg-[#0f0f0f] hover:text-white'
                 }`}
               >
                 {category === 'all' ? 'All' : category}
@@ -198,7 +193,7 @@ export default function NewsPage() {
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#10b981]"></div>
           </div>
         ) : (
           <>
@@ -208,7 +203,7 @@ export default function NewsPage() {
                 <Link
                   key={article.id}
                   href={`/news/${article.id}`}
-                  className="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all"
+                  className="group bg-[#1a1a1a] border border-[#262626] hover:border-[#10b981]/50 rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:shadow-[#10b981]/20 transition-all"
                 >
                   {/* Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -218,7 +213,7 @@ export default function NewsPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-2 left-2">
-                      <span className="px-2 py-1 bg-white dark:bg-gray-800 rounded text-xs font-medium">
+                      <span className="px-2 py-1 bg-black/80 backdrop-blur-sm text-white rounded text-xs font-medium">
                         {article.category}
                       </span>
                     </div>
@@ -226,7 +221,7 @@ export default function NewsPage() {
 
                   {/* Content */}
                   <div className="p-4">
-                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">
                       <div className="flex items-center gap-1">
                         <FiCalendar size={12} />
                         <span>{new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
@@ -242,15 +237,15 @@ export default function NewsPage() {
                       )}
                     </div>
 
-                    <h3 className="text-base font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-base font-bold mb-2 line-clamp-2 text-white group-hover:text-[#10b981] transition-colors">
                       {article.title}
                     </h3>
 
-                    <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
+                    <p className="text-sm text-gray-400 line-clamp-2 mb-3">
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center text-primary text-sm font-medium">
+                    <div className="flex items-center text-[#10b981] text-sm font-medium">
                       <span>Read more</span>
                       <FiArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" size={14} />
                     </div>
@@ -260,14 +255,12 @@ export default function NewsPage() {
             </div>
 
             {filteredNews.length === 0 && (
-              <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-                <p className="text-gray-500 dark:text-gray-400 text-sm">No news in this category</p>
+              <div className="text-center py-12 bg-[#1a1a1a] border border-[#262626] rounded-lg">
+                <p className="text-gray-400 text-sm">No news in this category</p>
               </div>
             )}
 
-            {/* Bottom Ad */}
-            <AdBanner slot="news-bottom" format="horizontal" />
-          </>
+            {/* Bottom Ad */}</>
         )}
       </div>
     </div>

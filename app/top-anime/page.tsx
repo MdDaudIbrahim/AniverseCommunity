@@ -76,27 +76,27 @@ export default function TopAnimePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Top 100 Anime</h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <h1 className="text-4xl font-bold mb-2 text-white">Top 100 Anime</h1>
+          <p className="text-gray-400">
             The top 100 highest-rated anime of all time according to MyAnimeList
           </p>
           <div className="mt-3 flex items-center gap-3">
             {usingFallback && (
-              <div className="inline-flex items-center px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm">
+              <div className="inline-flex items-center px-3 py-1 bg-[#10b981]/20 text-[#10b981] rounded-full text-sm border border-[#10b981]/30">
                 ⚡ Loaded instantly with cached data
               </div>
             )}
             {!usingFallback && anime.length < 100 && (
-              <div className="inline-flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">
+              <div className="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm border border-blue-500/30">
                 📥 Loading... {anime.length}/100
               </div>
             )}
             {anime.length >= 100 && (
-              <div className="inline-flex items-center px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-sm">
+              <div className="inline-flex items-center px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm border border-purple-500/30">
                 ✅ All 100 anime loaded!
               </div>
             )}
@@ -105,8 +105,8 @@ export default function TopAnimePage() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <p className="text-yellow-800 dark:text-yellow-200">
+          <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <p className="text-yellow-400">
               <strong>Note:</strong> Showing cached anime. Live data temporarily unavailable.
             </p>
           </div>
@@ -116,8 +116,8 @@ export default function TopAnimePage() {
         {loading ? (
           <LoadingGrid count={24} />
         ) : anime.length === 0 ? (
-          <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-            <p className="text-gray-500 dark:text-gray-400">No anime found</p>
+          <div className="text-center py-12 bg-[#1a1a1a] border border-[#262626] rounded-lg">
+            <p className="text-gray-400">No anime found</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">

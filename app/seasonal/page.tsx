@@ -5,7 +5,6 @@ import AnimeCard from '@/components/anime/AnimeCard';
 import LoadingGrid from '@/components/ui/LoadingGrid';
 import { FEATURED_SEASONAL, TRENDING_NOW } from '@/lib/data/fallbackData';
 import { FiCalendar, FiRefreshCw, FiTrendingUp } from 'react-icons/fi';
-import AdBanner from '@/components/ads/AdBanner';
 
 interface Anime {
   mal_id: number;
@@ -104,23 +103,20 @@ export default function SeasonalPage() {
   const seasonIcon = seasons.find(s => s.value === selectedSeason)?.icon || '📅';
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <div className="container mx-auto px-4 py-8">
         {/* Compact Header */}
         <div className="mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
             {seasonIcon} Seasonal Anime {selectedYear}
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-400">
             Browse anime by season and year
           </p>
         </div>
 
-        {/* Ad Banner */}
-        <AdBanner slot="seasonal-top" format="horizontal" className="mb-6" />
-
         {/* Compact Season Selector */}
-        <div className="mb-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+        <div className="mb-6 bg-[#1a1a1a] border border-[#262626] rounded-xl p-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Season Buttons */}
             <div className="flex flex-wrap gap-2">
@@ -130,8 +126,8 @@ export default function SeasonalPage() {
                   onClick={() => handleSeasonChange(season.value)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                     selectedSeason === season.value
-                      ? 'bg-primary text-white shadow-md scale-105'
-                      : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      ? 'bg-[#10b981] text-white shadow-md scale-105'
+                      : 'bg-[#0f0f0f] border border-[#262626] text-gray-300 hover:bg-[#1a1a1a] hover:border-[#10b981]/50'
                   }`}
                 >
                   <span>{season.icon}</span>
@@ -145,7 +141,7 @@ export default function SeasonalPage() {
               <select
                 value={selectedYear}
                 onChange={(e) => handleYearChange(parseInt(e.target.value))}
-                className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 text-sm font-semibold"
+                className="px-3 py-1.5 rounded-lg border border-[#262626] bg-[#0f0f0f] text-white focus:outline-none focus:border-[#10b981] text-sm font-semibold"
               >
                 {generateYears().map((year) => (
                   <option key={year} value={year}>
@@ -159,7 +155,7 @@ export default function SeasonalPage() {
                   setSelectedSeason(getCurrentSeason());
                   setSelectedYear(currentYear);
                 }}
-                className="px-2.5 py-1.5 bg-green-500 text-white rounded-lg text-xs font-semibold hover:bg-green-600 transition-colors"
+                className="px-2.5 py-1.5 bg-[#10b981] text-white rounded-lg text-xs font-semibold hover:bg-[#059669] transition-colors"
                 title="Current Season"
               >
                 🔥
@@ -179,11 +175,11 @@ export default function SeasonalPage() {
 
         {/* Results Info */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">
+          <h2 className="text-xl font-bold text-white">
             {seasonLabel} {selectedYear}
           </h2>
           {totalCount > 0 && (
-            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+            <span className="text-xs text-gray-400 bg-[#1a1a1a] border border-[#262626] px-2 py-1 rounded-full">
               {totalCount} anime
             </span>
           )}
@@ -191,8 +187,8 @@ export default function SeasonalPage() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <p className="text-sm text-yellow-400">
               ⚠️ {error}. Showing cached data.
             </p>
           </div>
@@ -202,9 +198,9 @@ export default function SeasonalPage() {
         {loading ? (
           <LoadingGrid count={24} />
         ) : anime.length === 0 ? (
-          <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-lg">
-            <p className="text-xl text-gray-500 dark:text-gray-400 mb-2">No anime found</p>
-            <p className="text-sm text-gray-400">Try selecting a different season or year</p>
+          <div className="text-center py-20 bg-[#1a1a1a] border border-[#262626] rounded-lg">
+            <p className="text-xl text-gray-400 mb-2">No anime found</p>
+            <p className="text-sm text-gray-500">Try selecting a different season or year</p>
           </div>
         ) : (
           <>
@@ -212,11 +208,6 @@ export default function SeasonalPage() {
               {anime.map((item) => (
                 <AnimeCard key={item.mal_id} anime={item as any} />
               ))}
-            </div>
-
-            {/* Bottom Ad */}
-            <div className="mt-12">
-              <AdBanner slot="seasonal-bottom" format="horizontal" />
             </div>
           </>
         )}

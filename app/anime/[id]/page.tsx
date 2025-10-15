@@ -5,8 +5,6 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiStar, FiCalendar, FiTv, FiClock, FiLoader } from 'react-icons/fi';
-import AdBanner from '@/components/ads/AdBanner';
-import AdSidebar from '@/components/ads/AdSidebar';
 import AnimeCard from '@/components/anime/AnimeCard';
 import { Anime } from '@/lib/types/anime';
 
@@ -173,11 +171,6 @@ export default function AnimePage() {
           </div>
         </div>
 
-        {/* Ad Banner */}
-        <div className="container mx-auto px-4 py-4">
-          <AdBanner slot="4567890123" format="horizontal" />
-        </div>
-
         {/* Content */}
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -285,9 +278,6 @@ export default function AnimePage() {
                   </div>
                 </section>
               )}
-
-              {/* Bottom Ad */}
-              <AdBanner slot="5678901234" format="horizontal" />
             </div>
 
             {/* Sidebar */}
@@ -303,9 +293,6 @@ export default function AnimePage() {
                   />
                 </div>
               </div>
-
-              {/* Sidebar Ad */}
-              <AdSidebar slot="6789012345" />
             </aside>
           </div>
         </div>

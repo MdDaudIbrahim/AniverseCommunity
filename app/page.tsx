@@ -1,56 +1,36 @@
-import AnimeCarousel from "@/components/home/AnimeCarousel";
-import TrendingAnime from "@/components/home/TrendingAnime";
-import TopAnime from "@/components/home/TopAnime";
-import SeasonalAnime from "@/components/home/SeasonalAnime";
-import AdBanner from "@/components/ads/AdBanner";
+import FeaturedAnimeHero from "@/components/home/FeaturedAnimeHero";
+import AnimeVaultGrid from "@/components/home/AnimeVaultGrid";
+import LatestAnimeNews from "@/components/home/LatestAnimeNews";
+import WeeklySchedule from "@/components/home/WeeklySchedule";
+import SeasonalAnimeSection from "@/components/home/SeasonalAnimeSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Automatic Anime Carousel */}
-      <AnimeCarousel />
-      
-      {/* Ad Banner after hero */}
-      <div className="container mx-auto px-4 py-4">
-        <AdBanner 
-          slot="1234567890" 
-          format="horizontal"
-          className="mb-8"
-        />
-      </div>
-
-      {/* Trending Anime Section */}
-      <section className="container mx-auto px-4 py-8">
-        <TrendingAnime />
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Hero Section */}
+      <section className="relative">
+        <FeaturedAnimeHero />
       </section>
 
-      {/* Ad Banner between sections */}
-      <div className="container mx-auto px-4 py-4">
-        <AdBanner 
-          slot="2345678901" 
-          format="horizontal"
-          className="my-8"
-        />
-      </div>
-
-      {/* Top Rated Anime Section */}
-      <section className="container mx-auto px-4 py-8">
-        <TopAnime />
+      {/* Main Content with Sidebar */}
+      <section className="container mx-auto px-4 py-12">
+        <AnimeVaultGrid />
       </section>
 
-      {/* Seasonal Anime Section */}
-      <section className="container mx-auto px-4 py-8">
-        <SeasonalAnime />
+      {/* Latest Anime News */}
+      <section className="container mx-auto px-4 py-12">
+        <LatestAnimeNews />
       </section>
 
-      {/* Bottom Ad Banner */}
-      <div className="container mx-auto px-4 py-4">
-        <AdBanner 
-          slot="3456789012" 
-          format="horizontal"
-          className="mt-8 mb-4"
-        />
-      </div>
+      {/* Weekly Schedule */}
+      <section className="container mx-auto px-4 py-12">
+        <WeeklySchedule />
+      </section>
+
+      {/* Seasonal Anime */}
+      <section className="container mx-auto px-4 py-12 pb-16">
+        <SeasonalAnimeSection />
+      </section>
     </div>
   );
 }

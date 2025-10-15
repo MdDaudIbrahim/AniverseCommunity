@@ -90,34 +90,34 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
+    <header className="sticky top-0 z-50 bg-[#0f0f0f] border-b border-gray-800 shadow-lg backdrop-blur-md">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              AnimeVerse
+              NextAnime
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="hover:text-primary transition-colors">
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors">
               Home
             </Link>
-            <Link href="/top-anime" className="hover:text-primary transition-colors">
+            <Link href="/top-anime" className="text-gray-300 hover:text-white transition-colors">
               Top 100 Anime
             </Link>
-            <Link href="/seasonal" className="hover:text-primary transition-colors">
+            <Link href="/seasonal" className="text-gray-300 hover:text-white transition-colors">
               Seasonal
             </Link>
-            <Link href="/genres" className="hover:text-primary transition-colors">
+            <Link href="/genres" className="text-gray-300 hover:text-white transition-colors">
               Genres
             </Link>
-            <Link href="/news" className="hover:text-primary transition-colors">
+            <Link href="/news" className="text-gray-300 hover:text-white transition-colors">
               News
             </Link>
-            <Link href="/recommendations" className="hover:text-primary transition-colors">
+            <Link href="/recommendations" className="text-gray-300 hover:text-white transition-colors">
               Recommendations
             </Link>
           </div>
@@ -131,7 +131,7 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => searchResults.length > 0 && setShowDropdown(true)}
-                className="w-80 pl-10 pr-10 py-2 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800"
+                className="w-80 pl-10 pr-10 py-2 rounded-full border border-gray-700 bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
               />
               <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               {isSearching && (
@@ -141,7 +141,7 @@ export default function Header() {
 
             {/* Search Dropdown */}
             {showDropdown && searchResults.length > 0 && (
-              <div className="absolute top-full mt-2 w-full bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[500px] overflow-y-auto">
+              <div className="absolute top-full mt-2 w-full bg-[#1a1a1a] rounded-lg shadow-2xl border border-gray-700 overflow-hidden z-50 max-h-[500px] overflow-y-auto">
                 {searchResults.map((anime) => (
                   <button
                     key={anime.mal_id}

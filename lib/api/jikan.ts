@@ -80,6 +80,14 @@ export async function getAiringAnime(page: number = 1): Promise<JikanResponse<An
   return rateLimitedFetch(url);
 }
 
+// Get weekly schedule
+export async function getWeeklySchedule(day?: string): Promise<JikanResponse<Anime[]>> {
+  const url = day 
+    ? `${JIKAN_API_BASE}/schedules?filter=${day.toLowerCase()}`
+    : `${JIKAN_API_BASE}/schedules`;
+  return rateLimitedFetch(url);
+}
+
 // Search anime
 export async function searchAnime(
   query: string,

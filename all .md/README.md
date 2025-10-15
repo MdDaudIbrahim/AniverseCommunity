@@ -1,4 +1,4 @@
-# 🎌 AnimeVerse - AdSense-Compliant Anime Recommendation Website
+# 🎌 NextAnime - Your Ultimate Anime Recommendation Hub
 
 A modern, fast, and fully **Google AdSense-compliant** anime recommendation website built with **Next.js 14**, **TypeScript**, and the **Jikan API** (MyAnimeList data).
 

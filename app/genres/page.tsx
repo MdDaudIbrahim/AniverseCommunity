@@ -26,23 +26,23 @@ export default function GenresPage() {
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
             Browse by Genre
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
             Discover thousands of anime across different genres and find your next favorite show
           </p>
-          <div className="mt-6 flex justify-center gap-4 text-sm text-gray-500">
+          <div className="mt-6 flex justify-center gap-4 text-sm text-gray-400">
             <span className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <div className="w-2 h-2 bg-[#10b981] rounded-full"></div>
               12 Genres
             </span>
             <span className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-secondary rounded-full"></div>
+              <div className="w-2 h-2 bg-[#10b981] rounded-full"></div>
               1000+ Anime
             </span>
           </div>
@@ -56,12 +56,12 @@ export default function GenresPage() {
               <Link
                 key={genre.id}
                 href={`/genre/${genre.id}`}
-                className="group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105"
+                className="group relative overflow-hidden rounded-2xl bg-[#1a1a1a] border border-[#262626] hover:border-[#10b981]/50 shadow-lg hover:shadow-2xl hover:shadow-[#10b981]/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105"
                 onMouseEnter={() => setSelectedGenre(genre.id)}
                 onMouseLeave={() => setSelectedGenre(null)}
               >
                 {/* Animated Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${genre.color} opacity-0 group-hover:opacity-20 transition-all duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${genre.color} opacity-0 group-hover:opacity-10 transition-all duration-500`} />
                 
                 {/* Subtle Pattern Overlay */}
                 <div className="absolute inset-0 opacity-5">
@@ -79,17 +79,17 @@ export default function GenresPage() {
                   </div>
                   
                   {/* Genre Name */}
-                  <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white group-hover:text-[#10b981] transition-colors duration-300">
                     {genre.name}
                   </h3>
                   
                   {/* Description */}
-                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                  <p className="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors">
                     {genre.description}
                   </p>
                   
                   {/* Explore Button */}
-                  <div className="mt-4 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                  <div className="mt-4 flex items-center gap-2 text-[#10b981] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                     <span className="text-sm font-semibold">Explore</span>
                     <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -97,8 +97,8 @@ export default function GenresPage() {
                   </div>
                   
                   {/* Corner Badge */}
-                  <div className="absolute top-4 right-4 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <svg className="w-4 h-4 text-primary group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-[#10b981]/10 rounded-full flex items-center justify-center group-hover:bg-[#10b981] group-hover:scale-110 transition-all duration-300">
+                    <svg className="w-4 h-4 text-[#10b981] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -110,16 +110,16 @@ export default function GenresPage() {
 
         {/* Info Section */}
         <div className="mt-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-3xl blur-3xl"></div>
-          <div className="relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 md:p-12 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/5 via-[#10b981]/5 to-[#10b981]/5 rounded-3xl blur-3xl"></div>
+          <div className="relative bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a] backdrop-blur-sm border border-[#262626] rounded-2xl p-8 md:p-12 overflow-hidden">
             {/* Decorative pattern */}
             <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary rounded-full blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#10b981] rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#10b981] rounded-full blur-3xl"></div>
             </div>
             
             <div className="relative">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
                 Explore Endless Possibilities
               </h3>
               <p className="text-gray-400 text-center max-w-3xl mx-auto mb-8 leading-relaxed">
@@ -128,41 +128,41 @@ export default function GenresPage() {
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="group text-center p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+                <div className="group text-center p-6 bg-[#0a0a0a]/50 rounded-xl border border-[#262626] hover:border-[#10b981] transition-all duration-300 hover:shadow-lg hover:shadow-[#10b981]/20">
                   <div className="text-4xl mb-3">🎯</div>
-                  <h4 className="font-bold mb-2 text-lg group-hover:text-primary transition-colors">Popular Genres</h4>
+                  <h4 className="font-bold mb-2 text-lg text-white group-hover:text-[#10b981] transition-colors">Popular Genres</h4>
                   <p className="text-sm text-gray-400">
                     Action, Romance, and Comedy are the most watched genres with millions of fans
                   </p>
                 </div>
-                <div className="group text-center p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-secondary transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20">
+                <div className="group text-center p-6 bg-[#0a0a0a]/50 rounded-xl border border-[#262626] hover:border-[#10b981] transition-all duration-300 hover:shadow-lg hover:shadow-[#10b981]/20">
                   <div className="text-4xl mb-3">🌟</div>
-                  <h4 className="font-bold mb-2 text-lg group-hover:text-secondary transition-colors">Mix & Match</h4>
+                  <h4 className="font-bold mb-2 text-lg text-white group-hover:text-[#10b981] transition-colors">Mix & Match</h4>
                   <p className="text-sm text-gray-400">
                     Many anime combine multiple genres creating unique and unforgettable experiences
                   </p>
                 </div>
-                <div className="group text-center p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20">
+                <div className="group text-center p-6 bg-[#0a0a0a]/50 rounded-xl border border-[#262626] hover:border-[#10b981] transition-all duration-300 hover:shadow-lg hover:shadow-[#10b981]/20">
                   <div className="text-4xl mb-3">📚</div>
-                  <h4 className="font-bold mb-2 text-lg group-hover:text-accent transition-colors">Explore More</h4>
+                  <h4 className="font-bold mb-2 text-lg text-white group-hover:text-[#10b981] transition-colors">Explore More</h4>
                   <p className="text-sm text-gray-400">
                     Try different genres to discover hidden gems and your new favorite anime series
                   </p>
                 </div>
               </div>
               
-              <div className="mt-10 pt-8 border-t border-slate-700">
+              <div className="mt-10 pt-8 border-t border-[#262626]">
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></div>
                     <span>Updated Daily</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></div>
                     <span>High-Quality Content</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-[#10b981] rounded-full animate-pulse"></div>
                     <span>Curated Collections</span>
                   </div>
                 </div>

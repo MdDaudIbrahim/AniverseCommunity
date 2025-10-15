@@ -19,19 +19,19 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "AnimeVerse - Your Ultimate Anime Recommendation Hub",
+  title: "NextAnime - Your Ultimate Anime Recommendation Hub",
   description: "Discover new and trending anime, get personalized recommendations, and explore detailed information about your favorite shows. Stay updated with the latest anime releases.",
   keywords: "anime, anime recommendations, trending anime, anime reviews, anime database, MyAnimeList, anime genres",
-  authors: [{ name: "AnimeVerse Community" }],
+  authors: [{ name: "NextAnime Community" }],
   openGraph: {
-    title: "AnimeVerse - Your Ultimate Anime Recommendation Hub",
+    title: "NextAnime - Your Ultimate Anime Recommendation Hub",
     description: "Discover new and trending anime with personalized recommendations",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AnimeVerse - Your Ultimate Anime Recommendation Hub",
+    title: "NextAnime - Your Ultimate Anime Recommendation Hub",
     description: "Discover new and trending anime with personalized recommendations",
   },
   robots: {
@@ -58,10 +58,10 @@ export default function RootLayout({
       <head>
         <AdSenseScript />
       </head>
-      <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
+      <body className={`${inter.className} bg-[#0a0a0a]`}>
+        <div className="flex flex-col min-h-screen bg-[#0a0a0a]">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow bg-[#0a0a0a]">
             {children}
           </main>
           <Footer />

@@ -65,14 +65,14 @@ export default function SeasonalAnime() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-bold">This Season's Favorites</h2>
+          <h2 className="text-3xl font-bold text-white">This Season's Favorites</h2>
           {usingFallback && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-sm text-gray-400 mt-1">
               ⚡ Loaded instantly with cached data
             </p>
           )}
         </div>
-        <a href="/seasonal" className="text-primary hover:underline">
+        <a href="/seasonal" className="text-[#3B82F6] hover:text-[#60A5FA] transition-colors">
           View All →
         </a>
       </div>

@@ -65,14 +65,14 @@ export default function TopAnime() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-bold">Top Rated Anime</h2>
+          <h2 className="text-3xl font-bold text-white">Top Rated Anime</h2>
           {usingFallback && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-sm text-gray-400 mt-1">
               ⚡ Loaded instantly with cached data
             </p>
           )}
         </div>
-        <a href="/top-anime" className="text-primary hover:underline">
+        <a href="/top-anime" className="text-[#3B82F6] hover:text-[#60A5FA] transition-colors">
           View All →
         </a>
       </div>

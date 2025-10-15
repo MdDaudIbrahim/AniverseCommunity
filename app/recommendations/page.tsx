@@ -5,8 +5,6 @@ import AnimeCard from '@/components/anime/AnimeCard';
 import { FALLBACK_ANIME, FEATURED_SEASONAL, TRENDING_NOW } from '@/lib/data/fallbackData';
 import { FiRefreshCw, FiTrendingUp, FiStar, FiZap, FiHeart, FiLoader } from 'react-icons/fi';
 import Link from 'next/link';
-import AdBanner from '@/components/ads/AdBanner';
-
 interface Anime {
   mal_id: number;
   images: any;
@@ -82,23 +80,20 @@ export default function RecommendationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <div className="container mx-auto px-4 py-8">
         {/* Compact Header */}
         <div className="mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">
             Discover Your Next Favorite Anime
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-gray-400">
             Personalized recommendations based on trending shows, top-rated series, and hidden gems
           </p>
         </div>
 
-        {/* Ad Banner */}
-        <AdBanner slot="recommendations-top" format="horizontal" className="mb-6" />
-
-        {/* Compact Category Selector */}
-        <div className="mb-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+        {/* Ad Banner */}{/* Compact Category Selector */}
+        <div className="mb-6 bg-[#1a1a1a] border border-[#262626] rounded-xl p-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Category Buttons */}
             <div className="flex flex-wrap gap-2">
@@ -106,8 +101,8 @@ export default function RecommendationsPage() {
                 onClick={() => setActiveCategory('trending')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                   activeCategory === 'trending'
-                    ? 'bg-primary text-white shadow-md scale-105'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-[#10b981] text-white shadow-md scale-105'
+                    : 'bg-[#0f0f0f] border border-[#262626] text-gray-300 hover:bg-[#1a1a1a] hover:border-[#10b981]/50'
                 }`}
               >
                 <FiTrendingUp size={14} />
@@ -117,8 +112,8 @@ export default function RecommendationsPage() {
                 onClick={() => setActiveCategory('top-rated')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                   activeCategory === 'top-rated'
-                    ? 'bg-secondary text-white shadow-md scale-105'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-[#10b981] text-white shadow-md scale-105'
+                    : 'bg-[#0f0f0f] border border-[#262626] text-gray-300 hover:bg-[#1a1a1a] hover:border-[#10b981]/50'
                 }`}
               >
                 <FiStar size={14} />
@@ -128,8 +123,8 @@ export default function RecommendationsPage() {
                 onClick={() => setActiveCategory('popular')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                   activeCategory === 'popular'
-                    ? 'bg-accent text-white shadow-md scale-105'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-[#10b981] text-white shadow-md scale-105'
+                    : 'bg-[#0f0f0f] border border-[#262626] text-gray-300 hover:bg-[#1a1a1a] hover:border-[#10b981]/50'
                 }`}
               >
                 <FiZap size={14} />
@@ -139,8 +134,8 @@ export default function RecommendationsPage() {
                 onClick={() => setActiveCategory('mixed')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
                   activeCategory === 'mixed'
-                    ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-md scale-105'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-gradient-to-r from-[#10b981] to-[#059669] text-white shadow-md scale-105'
+                    : 'bg-[#0f0f0f] border border-[#262626] text-gray-300 hover:bg-[#1a1a1a] hover:border-[#10b981]/50'
                 }`}
               >
                 <FiHeart size={14} />
@@ -163,20 +158,20 @@ export default function RecommendationsPage() {
         {/* Main Recommendations Grid */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">
+            <h2 className="text-xl font-bold text-white">
               {activeCategory === 'trending' && '🔥 Trending Now'}
               {activeCategory === 'top-rated' && '⭐ Top Rated Anime'}
               {activeCategory === 'popular' && '⚡ Most Popular'}
               {activeCategory === 'mixed' && '🎲 Curated For You'}
             </h2>
-            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+            <span className="text-xs text-gray-400 bg-[#1a1a1a] border border-[#262626] px-2 py-1 rounded-full">
               {recommendations.length} anime
             </span>
           </div>
 
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <FiLoader className="w-12 h-12 text-primary animate-spin" />
+              <FiLoader className="w-12 h-12 text-[#10b981] animate-spin" />
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
@@ -188,12 +183,12 @@ export default function RecommendationsPage() {
         </div>
 
         {/* Personalized For You Section */}
-        <div className="mb-8 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl p-4">
+        <div className="mb-8 bg-gradient-to-br from-[#10b981]/5 to-[#10b981]/5 rounded-xl p-4 border border-[#262626]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold">✨ Picked Just For You</h2>
+            <h2 className="text-lg font-bold text-white">✨ Picked Just For You</h2>
             <button
               onClick={() => refreshSection(setForYou)}
-              className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-xs"
+              className="px-2.5 py-1.5 bg-[#1a1a1a] border border-[#262626] rounded-lg hover:bg-[#0f0f0f] hover:border-[#10b981]/50 transition-colors text-xs text-gray-300"
               title="Refresh"
             >
               <FiRefreshCw size={14} />
@@ -207,12 +202,12 @@ export default function RecommendationsPage() {
         </div>
 
         {/* Hidden Gems Section */}
-        <div className="mb-8 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-xl p-4 border border-purple-200 dark:border-purple-900">
+        <div className="mb-8 bg-gradient-to-br from-purple-500/5 to-pink-500/5 rounded-xl p-4 border border-[#262626]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold">💎 Hidden Gems</h2>
+            <h2 className="text-lg font-bold text-white">💎 Hidden Gems</h2>
             <button
               onClick={() => refreshSection(setHiddenGems)}
-              className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-xs"
+              className="px-2.5 py-1.5 bg-[#1a1a1a] border border-[#262626] rounded-lg hover:bg-[#0f0f0f] hover:border-[#10b981]/50 transition-colors text-xs text-gray-300"
               title="Refresh"
             >
               <FiRefreshCw size={14} />
@@ -226,8 +221,8 @@ export default function RecommendationsPage() {
         </div>
 
         {/* Explore by Genre */}
-        <div className="mb-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
-          <h2 className="text-lg font-bold mb-3">🎭 Explore by Genre</h2>
+        <div className="mb-6 bg-[#1a1a1a] border border-[#262626] rounded-xl p-4">
+          <h2 className="text-lg font-bold mb-3 text-white">🎭 Explore by Genre</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
             {[
               { name: 'Action', icon: '⚔️', id: '1' },
@@ -246,7 +241,7 @@ export default function RecommendationsPage() {
               <Link
                 key={genre.name}
                 href={`/genre/${genre.id}`}
-                className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 hover:bg-primary hover:text-white rounded-lg transition-all text-sm font-semibold"
+                className="flex items-center gap-2 p-2 bg-[#0f0f0f] border border-[#262626] hover:bg-[#10b981] hover:text-white hover:border-[#10b981] rounded-lg transition-all text-sm font-semibold text-gray-300"
               >
                 <span className="text-lg">{genre.icon}</span>
                 <span>{genre.name}</span>
@@ -255,9 +250,7 @@ export default function RecommendationsPage() {
           </div>
         </div>
 
-        {/* Bottom Ad */}
-        <AdBanner slot="recommendations-bottom" format="horizontal" />
-      </div>
+        {/* Bottom Ad */}</div>
     </div>
   );
 }

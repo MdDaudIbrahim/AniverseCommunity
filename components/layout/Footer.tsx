@@ -5,12 +5,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-auto">
+    <footer className="bg-[#0a0a0a] text-white mt-16 border-t border-gray-800">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-white">AnimeVerse</h3>
+            <h3 className="text-xl font-bold text-white">NextAnime</h3>
             <p className="text-sm">
               Your ultimate destination for anime recommendations, reviews, and the latest updates from the anime world.
             </p>
@@ -117,7 +117,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
           <p>
-            &copy; {currentYear} AnimeVerse. All rights reserved. | Built with ❤️ for anime fans
+            &copy; {currentYear} NextAnime. All rights reserved. | Built with ❤️ for anime fans
           </p>
         </div>
       </div>
